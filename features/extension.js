@@ -10,18 +10,21 @@ const vscode = require('vscode');
  */
 function activate(context) {
 
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
 	console.log('Congratulations, your extension "features" is now active!');
 
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with  registerCommand
-	// The commandId parameter must match the command field in package.json
-	let disposable = vscode.commands.registerCommand('features.helloWorld', function () {
-		// The code you place here will be executed every time your command is executed
-
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World from features!');
+	let disposable = vscode.commands.registerCommand('features.getHighlight', function () {
+		const textEditor = vscode.window.activeTextEditor; 
+		if(!textEditor){
+			console.log("ERROR: no window is open");
+			return;
+		}
+		let selected = textEditor.selection;
+		let contents = "ERROR: nothing was selected";
+		if(selected && !selected.isEmpty){
+			const highlightedRange = new vscode.Range(selected.start, selected.end);
+			contents = textEditor.document.getText(highlightedRange);
+		}
+		console.log("the highlighted contents are:", contents);
 	});
 
 	context.subscriptions.push(disposable);

@@ -13,8 +13,8 @@
   "main": "./extension.js",
   "contributes": {
     "commands": [{
-      "command": "features.helloWorld",
-      "title": "Hello World"
+      "command": "features.getHighlight",
+      "title": "Get Highlight"
     }]
   },
   "scripts": {
