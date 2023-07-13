@@ -15,7 +15,27 @@
     "commands": [{
       "command": "features.helloWorld",
       "title": "Hello World"
-    }]
+    }],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "story",
+          "title": "Section Name",
+          "icon": "icons/story-icon.png"
+        }
+      ]
+    },
+    "views": {
+			"story": [
+				{
+					"id": "history",
+					"name": "Subtitle",
+					"icon": "icons/story-icon.png",
+					"contextualTitle": "Code History",
+          "contents": "features.helloWorld"
+				}
+			]
+		}
   },
   "scripts": {
     "lint": "eslint .",
