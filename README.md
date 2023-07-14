@@ -6,7 +6,7 @@ general vscode extension api things:
 # setup
 install yo and the generator using:
 npm install -g yo generator-code
-
+and then run the generator using:
 yo code
 
 i found it easier to make sure that the vscode command "code" is installed before doing this
