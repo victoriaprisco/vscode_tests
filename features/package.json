@@ -21,7 +21,8 @@
         {
           "id": "story",
           "title": "Section Name",
-          "icon": "icons/story-icon.png"
+          "icon": "icons/story-icon.png",
+          "command": "features.helloWorld"
         }
       ]
     },
@@ -31,8 +32,7 @@
 					"id": "history",
 					"name": "Subtitle",
 					"icon": "icons/story-icon.png",
-					"contextualTitle": "Code History",
-          "contents": "features.helloWorld"
+					"contextualTitle": "Code History"
 				}
 			]
 		}
