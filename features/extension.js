@@ -1,7 +1,9 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
-const vscode = require('vscode');
-
+const vscode = require("vscode");
+let hasOpened = false;
+// let panel = vscode.window.createWebviewPanel("windowTitle", "New Window Header", vscode.ViewColumn.Active);
+// panel.webview.html = "<h1> you right clicked to get to this panel. good work </h1>";
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
 
@@ -9,28 +11,54 @@ const vscode = require('vscode');
  * @param {vscode.ExtensionContext} context
  */
 function activate(context) {
+  let currentPanel = vscode.WebviewPanel;
+  hasOpened = false;
+  let disposable = vscode.commands.registerCommand("features.rightClick", function () {
+      const textEditor = vscode.window.activeTextEditor;
+      if (!textEditor) {
+        console.log("ERROR: no window is open");
+        return;
+      }
+      let selected = textEditor.selection;
+      let contents = "ERROR: nothing was selected";
+      if (selected && !selected.isEmpty) {
+        const highlightedRange = new vscode.Range(selected.start, selected.end);
+        contents = textEditor.document.getText(highlightedRange);
 
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "features" is now active!');
+        console.log("the highlighted contents are:", contents);
+        if (hasOpened) {
+          // then it has already been opened
+          const openPanel = vscode.window.activeTextEditor;
+          currentPanel.reveal(openPanel);
+        } else {
+          hasOpened = true;
+          // then it has not been opened
+          currentPanel = vscode.window.createWebviewPanel(
+            "windowTitle",
+            "New Window Header",
+            vscode.ViewColumn.Active
+          );
+          currentPanel.webview.html = contents;
+        }
+      }
+      // reset the var after the panel is closed
+      panel.onDidDispose(
+        () => {
+          hasOpened = false;
+        },
+        null,
+        context.subscriptions
+      );
+    }
+  );
 
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with  registerCommand
-	// The commandId parameter must match the command field in package.json
-	let disposable = vscode.commands.registerCommand('features.helloWorld', function () {
-		// The code you place here will be executed every time your command is executed
-
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World from features!');
-	});
-
-	context.subscriptions.push(disposable);
+  context.subscriptions.push(disposable);
 }
 
 // This method is called when your extension is deactivated
 function deactivate() {}
 
 module.exports = {
-	activate,
-	deactivate
-}
+  activate,
+  deactivate,
+};
