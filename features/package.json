@@ -21,6 +21,23 @@
         "command": "features.rightClick",
         "group": "navigation"
       }]
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "story",
+          "title": "Section name",
+          "icon": "icons/story-icon.png"
+        }
+      ]
+    },
+    "views": {
+      "story": [
+        {
+          "id": "history",
+          "name": "Subtitle"
+        }
+      ]
     }
   },
   "scripts": {
