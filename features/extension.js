@@ -20,29 +20,32 @@ function activate(context) {
         return;
       }
       let selected = textEditor.selection;
-      let contents = "ERROR: nothing was selected";
       if (selected && !selected.isEmpty) {
         const highlightedRange = new vscode.Range(selected.start, selected.end);
-        contents = textEditor.document.getText(highlightedRange);
-
+        let contents = textEditor.document.getText(highlightedRange);
         console.log("the highlighted contents are:", contents);
+		console.log("hasOpened", hasOpened);
         if (hasOpened) {
           // then it has already been opened
           const openPanel = vscode.window.activeTextEditor;
+		  currentPanel.webview.html = contents;
           currentPanel.reveal(openPanel);
         } else {
           hasOpened = true;
           // then it has not been opened
           currentPanel = vscode.window.createWebviewPanel(
             "windowTitle",
-            "New Window Header",
+            "Code History",
             vscode.ViewColumn.Active
           );
           currentPanel.webview.html = contents;
         }
       }
+	  else {
+		vscode.window.showErrorMessage("Please select some text before viewing the story");
+	  }
       // reset the var after the panel is closed
-      panel.onDidDispose(
+      currentPanel.onDidDispose(
         () => {
           hasOpened = false;
         },

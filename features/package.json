@@ -14,7 +14,7 @@
   "contributes": {
     "commands": [{
       "command": "features.rightClick",
-      "title": "Right Click"
+      "title": "View Code History"
     }],
     "menus": {
       "editor/context": [{
